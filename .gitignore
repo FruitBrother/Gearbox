@@ -1,6 +1,9 @@
 *.tr
-
-
+analysis/bin/*
+analysis/share/*
+analysis/lib64
+analysis/pip-selfcheck.json
+analysis/pyvenv.cfg
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
