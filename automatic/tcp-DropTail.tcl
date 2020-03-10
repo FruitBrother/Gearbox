@@ -6,7 +6,7 @@ set hybrid 0
 set Elp_win_init_ 80;#50#68;#BDP #[lindex $argv 5] 
 set Elp_maxcwnd 100;#25,68,149;#[lindex $argv 6]
 
-source "~/eval/common/common.tcl"
+source "~/lining/Gearbox/eval/common/common.tcl"
 #source "tcp-common-opt.tcl"
 set ns [new Simulator]
 puts "Date: [clock format [clock seconds]]"
@@ -218,7 +218,7 @@ if {0} {
 
 set ctr [new Controller]
 
-source "~/eval/common/$top"
+source "~/lining/Gearbox/eval/common/$top"
 
 puts "Initial agent creation done";flush stdout
 puts "Simulation started!"
