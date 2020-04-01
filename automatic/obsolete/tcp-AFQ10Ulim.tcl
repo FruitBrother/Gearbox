@@ -1,6 +1,6 @@
 set myAgent "Agent/TCP/FullTcp/Sack/SolTCP";
 set switchAlg "DropTail"
-set bottleneckAlg "DropTail"
+set bottleneckAlg "AFQ10UlimPL"
 #set bottleneckAlg "DropTail"
 set hybrid 0
 set Elp_win_init_ 80;#50#68;#BDP #[lindex $argv 5] 
@@ -53,7 +53,7 @@ set qsize1_host_edg $size_queue
 set Elp_maxcwnd [expr $size_queue-1];#[expr $Elp_win_init+1] ;#25,68,149;#[lindex $argv 6]
 
 set enable_deadline 0;#[lindex $argv 4]
-set flowlog [open tcp_DropTail_flow_$num_flow\_$ld\_$top.tr w]
+set flowlog [open tcp_AFQ10Ulim_flow_$num_flow\_$ld\_$top.tr w]
 puts "flowlog: $flowlog"
 
 #set win_init_ 25;#25;#68;#BDP #[lindex $argv 5]

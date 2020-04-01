@@ -6,14 +6,14 @@ set hybrid 0
 set Elp_win_init_ 80;#50#68;#BDP #[lindex $argv 5] 
 set Elp_maxcwnd 100;#25,68,149;#[lindex $argv 6]
 
-source "~/eval/common/common.tcl"
+source "~/lining/Gearbox/eval/common/common.tcl"
 #source "tcp-common-opt.tcl"
 set ns [new Simulator]
 puts "Date: [clock format [clock seconds]]"
 set sim_start [clock seconds]
 puts "start: $sim_start"
-set tf [open $switchAlg-out.tr w]
-$ns trace-all $tf
+#set tf [open out.tr w]
+#$ns trace-all $tf
 
 # Peixuan 02282020
 #set ftr [open "out.nam" w]
@@ -30,7 +30,7 @@ if {$argc != 3} {
 set num_flow [lindex $argv 0]
 set num_queue 1;#[lindex $argv 1]
 set cap0 1000000;#[lindex $argv 2]
-set size_queue 226
+set size_queue 500
 set pfc 0;#[lindex $argv 3]
 set margin_ 10 ;#[lindex $argv 4]
 set Elp_win_init_ 25;#[lindex $argv 4]
@@ -53,7 +53,7 @@ set qsize1_host_edg $size_queue
 set Elp_maxcwnd [expr $size_queue-1];#[expr $Elp_win_init+1] ;#25,68,149;#[lindex $argv 6]
 
 set enable_deadline 0;#[lindex $argv 4]
-set flowlog [open tcp_DropTail_flow_$num_flow\_$ld\_$top.tr w]
+set flowlog [open tcp_DropTail-500_flow_$num_flow\_$ld\_$top.tr w]
 puts "flowlog: $flowlog"
 
 #set win_init_ 25;#25;#68;#BDP #[lindex $argv 5]

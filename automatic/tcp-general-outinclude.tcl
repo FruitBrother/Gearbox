@@ -1,18 +1,27 @@
+if {$argc != 4} {
+        puts "wrong number of arguments $argc"
+        exit 0
+}
+
+set num_flow [lindex $argv 0]
+set ld [lindex $argv 1]
+set top [lindex $argv 2]
+set bottleneckAlg [lindex $argv 3]
+
 set myAgent "Agent/TCP/FullTcp/Sack/SolTCP";
 set switchAlg "DropTail"
-set bottleneckAlg "DropTail"
 #set bottleneckAlg "DropTail"
 set hybrid 0
 set Elp_win_init_ 80;#50#68;#BDP #[lindex $argv 5] 
 set Elp_maxcwnd 100;#25,68,149;#[lindex $argv 6]
 
-source "~/eval/common/common.tcl"
+source "~/lining/Gearbox/eval/common/common.tcl"
 #source "tcp-common-opt.tcl"
 set ns [new Simulator]
 puts "Date: [clock format [clock seconds]]"
 set sim_start [clock seconds]
 puts "start: $sim_start"
-set tf [open $switchAlg-out.tr w]
+set tf [open $bottleneckAlg\_flow_$num_flow\_$ld\_$top\_out.tr w]
 $ns trace-all $tf
 
 # Peixuan 02282020
@@ -20,14 +29,6 @@ $ns trace-all $tf
 #$ns namtrace-all $ftr
 
 
-
-if {$argc != 3} {
-        puts "wrong number of arguments $argc"
-        exit 0
-}
-
-
-set num_flow [lindex $argv 0]
 set num_queue 1;#[lindex $argv 1]
 set cap0 1000000;#[lindex $argv 2]
 set size_queue 226
@@ -37,7 +38,6 @@ set Elp_win_init_ 25;#[lindex $argv 4]
 set Elp_min_rto  0.004;#[lindex $argv 5]
 set min_deadline_offset 0.5
 #set max_deadline_offset [lindex $argv 6]
-set ld [lindex $argv 1]
 #set win_init_ 25;#50#68;#BDP #[lindex $argv 5]
 set win_init_ 1;#50#68;#BDP #[lindex $argv 5]  Peixuan 01022020
 #set maxcwnd 50;#$size_queue;#25,68,149;#[lindex $argv 6]
@@ -47,13 +47,12 @@ set pfc_thr1_edg_agg [expr $size_queue-6];#[lindex $argv 6]
 
 set pfc_thr1_host_edg [expr $size_queue-6];#[lindex $argv 7]
 
-set top [lindex $argv 2]
 set qsize1_host_edg $size_queue
 #set Elp_win_init_ 40;#50#68;#BDP #[lindex $argv 5] 
 set Elp_maxcwnd [expr $size_queue-1];#[expr $Elp_win_init+1] ;#25,68,149;#[lindex $argv 6]
 
 set enable_deadline 0;#[lindex $argv 4]
-set flowlog [open tcp_DropTail_flow_$num_flow\_$ld\_$top.tr w]
+set flowlog [open tcp_$bottleneckAlg\_flow_$num_flow\_$ld\_$top.tr w]
 puts "flowlog: $flowlog"
 
 #set win_init_ 25;#25;#68;#BDP #[lindex $argv 5]
