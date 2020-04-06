@@ -19,7 +19,7 @@ then
                 echo "Waiting for $pid"
                 wait $pid
         done
-elif [ "$#" == 3 ]
+elif [ "$#" == 4 ]
 then
 		script=$1
 		flownum=$2
