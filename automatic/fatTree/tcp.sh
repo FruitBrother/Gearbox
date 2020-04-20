@@ -27,9 +27,7 @@ then
 		alg=$4
         pids=""
         names=""
-        for load in 0.95 0.9 0.8 
-#       for load in 0.7 0.6 0.5 
-#       for load in 0.4 0.3 0.2 0.1
+        for load in 0.95 0.9 0.8 0.7 0.6 0.5 0.4 0.3 0.2 0.1
         do
 	      	cmd="ns $script $flownum $load $topology $alg &> /dev/null &"
                 name="tcp_$alg_flow_$flownum_$load_$topology.tr"

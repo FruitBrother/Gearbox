@@ -39,7 +39,7 @@ puts "num_ports:$num_ports num_pod:$num_pod num_agr_per_pod:$num_agr_per_pod num
 $ctr settop $num_host_per_sw $num_edg_per_pod $num_agr_per_pod $num_cor_per_agg $num_pod $num_cores
 
 # 02262020 Peixuan: Set bottleneck link rate and delay
-set bottoneck_rate 40Mb
+set bottoneck_rate 1Gb
 set bottoneck_delay 3ms
 set other_link_delay 600us
 
@@ -168,7 +168,7 @@ for { set edge 0 } { $edge < $num_edg_per_pod } { incr edge } {
 				set w1 [expr $pod*$num_edg_per_pod*$num_host_per_sw+$edge*$num_host_per_sw+$index]
 				set w2 [expr $pod2*$num_edg_per_pod*$num_host_per_sw+$edge2*$num_host_per_sw+$index2]
 
-				$agtagr($pod,$edge,$index,$pod2,$edge2,$index2) set_PCarrival_process  [expr $lambda/($num_hosts - 1)] "$env(HOME)/eval/common/CDF_search.tcl" [expr 17*$w1+1244*$w2] [expr 33*$w1+4369*$w2]
+				$agtagr($pod,$edge,$index,$pod2,$edge2,$index2) set_PCarrival_process  [expr $lambda/($num_hosts - 1)] "$env(HOME)/lining/Gearbox/eval/common/CDF_search.tcl" [expr 17*$w1+1244*$w2] [expr 33*$w1+4369*$w2]
 #				$ns at 0.1 "$agtagr($pod,$edge,$index,$pod2,$edge2,$index2) warmup 0.5 5"
 				$ns at 1 "$agtagr($pod,$edge,$index,$pod2,$edge2,$index2) init_schedule"
 				set init_fid [expr $init_fid + $connections_per_pair];							

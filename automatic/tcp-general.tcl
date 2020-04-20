@@ -93,8 +93,7 @@ set deque_prio_ 0
 #prob_mode_ 0
 set keep_order_ 0
 set DCTCP_K 10000
-#set link_rate 1.0000;#Gbps
-set link_rate 100.00;#Gbps 02292020 Peixuan
+set link_rate 64.00;#Gbps
 set load $ld
 set enableNAM 0
 ################# Transport Options ####################

@@ -6,11 +6,9 @@ if {$argc != 4} {
 set num_flow [lindex $argv 0]
 set ld [lindex $argv 1]
 set top [lindex $argv 2]
-set bottleneckAlg [lindex $argv 3]
 
 set myAgent "Agent/TCP/FullTcp/Sack/SolTCP";
-set switchAlg "DropTail"
-#set bottleneckAlg "DropTail"
+set switchAlg [lindex $argv 3]
 set hybrid 0
 set Elp_win_init_ 80;#50#68;#BDP #[lindex $argv 5] 
 set Elp_maxcwnd 100;#25,68,149;#[lindex $argv 6]
@@ -21,8 +19,8 @@ set ns [new Simulator]
 puts "Date: [clock format [clock seconds]]"
 set sim_start [clock seconds]
 puts "start: $sim_start"
-set tf [open $bottleneckAlg\_flow_$num_flow\_$ld\_$top\_out.tr w]
-$ns trace-all $tf
+#set tf [open $bottleneckAlg\_flow_$num_flow\_$ld\_$top\_out.tr w]
+#$ns trace-all $tf
 
 # Peixuan 02282020
 #set ftr [open "out.nam" w]
@@ -52,7 +50,7 @@ set qsize1_host_edg $size_queue
 set Elp_maxcwnd [expr $size_queue-1];#[expr $Elp_win_init+1] ;#25,68,149;#[lindex $argv 6]
 
 set enable_deadline 0;#[lindex $argv 4]
-set flowlog [open tcp_$bottleneckAlg\_flow_$num_flow\_$ld\_$top.tr w]
+set flowlog [open tcp_fatTree_flow_$num_flow\_$ld\_$top.tr w]
 puts "flowlog: $flowlog"
 
 #set win_init_ 25;#25;#68;#BDP #[lindex $argv 5]
@@ -93,7 +91,7 @@ set deque_prio_ 0
 #prob_mode_ 0
 set keep_order_ 0
 set DCTCP_K 10000
-set link_rate 64.00
+set link_rate 10.0000;#Gbps
 set load $ld
 set enableNAM 0
 ################# Transport Options ####################

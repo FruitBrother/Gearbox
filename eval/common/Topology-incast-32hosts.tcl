@@ -39,7 +39,7 @@ puts "num_ports:$num_ports num_pod:$num_pod num_agr_per_pod:$num_agr_per_pod num
 $ctr settop $num_host_per_sw $num_edg_per_pod $num_agr_per_pod $num_cor_per_agg $num_pod $num_cores
 
 set hostedg_rate [expr $link_rate]
-set edgeagg_rate [expr $link_rate];#[expr $link_rate*$num_host_per_sw/$num_agr_per_pod]
+set edgeagg_rate [expr ($link_rate)*($num_host_per_sw)];#[expr $link_rate*$num_host_per_sw/$num_agr_per_pod]
 set aggcore_rate $edgeagg_rate;#[expr $link_rate*$num_host_per_pod/$num_cores]
 puts "hostedg_rate:$hostedg_rate edgeagg_rate:$edgeagg_rate aggcore_rate:$aggcore_rate"
 
