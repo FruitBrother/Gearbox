@@ -40,8 +40,8 @@ $ctr settop $num_host_per_sw $num_edg_per_pod $num_agr_per_pod $num_cor_per_agg 
 
 # 02262020 Peixuan: Set bottleneck link rate and delay
 set bottoneck_rate 1Gb
-set bottoneck_delay 3ms
-set other_link_delay 600us
+set bottoneck_delay 1us
+set other_link_delay 1us
 
 set hostedg_rate [expr $link_rate]
 set edgeagg_rate [expr $link_rate];#[expr $link_rate*$num_host_per_sw/$num_agr_per_pod]

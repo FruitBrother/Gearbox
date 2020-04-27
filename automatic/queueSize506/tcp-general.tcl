@@ -31,7 +31,7 @@ puts "start: $sim_start"
 
 set num_queue 1;#[lindex $argv 1]
 set cap0 1000000;#[lindex $argv 2]
-set size_queue 226
+set size_queue 506
 set pfc 0;#[lindex $argv 3]
 set margin_ 10 ;#[lindex $argv 4]
 set Elp_win_init_ 25;#[lindex $argv 4]

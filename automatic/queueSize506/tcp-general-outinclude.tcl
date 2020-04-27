@@ -21,8 +21,8 @@ set ns [new Simulator]
 puts "Date: [clock format [clock seconds]]"
 set sim_start [clock seconds]
 puts "start: $sim_start"
-#set tf [open $bottleneckAlg\_flow_$num_flow\_$ld\_$top\_out.tr w]
-#$ns trace-all $tf
+set tf [open $bottleneckAlg\_flow_$num_flow\_$ld\_$top\_out.tr w]
+$ns trace-all $tf
 
 # Peixuan 02282020
 #set ftr [open "out.nam" w]
@@ -31,7 +31,7 @@ puts "start: $sim_start"
 
 set num_queue 1;#[lindex $argv 1]
 set cap0 1000000;#[lindex $argv 2]
-set size_queue 226
+set size_queue 506
 set pfc 0;#[lindex $argv 3]
 set margin_ 10 ;#[lindex $argv 4]
 set Elp_win_init_ 25;#[lindex $argv 4]
@@ -93,7 +93,7 @@ set deque_prio_ 0
 #prob_mode_ 0
 set keep_order_ 0
 set DCTCP_K 10000
-set link_rate 8.00;#Gbps
+set link_rate 64.00
 set load $ld
 set enableNAM 0
 ################# Transport Options ####################
