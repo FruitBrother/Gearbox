@@ -1,3 +1,13 @@
+
+# Peixuan02282020
+$ns color 0 Red
+$ns color 1 Blue
+$ns color 2 Green
+$ns color 3 Yellow
+
+
+
+
 set enableMultiPath 1
 set perflowMP 1
 
@@ -25,7 +35,7 @@ set num_agr_per_pod	[expr $num_ports/2]
 set num_edg_per_pod	[expr $num_ports/2]
 set num_cor_per_agg	[expr $num_ports/2]
 #set num_host_per_sw 	[expr $num_ports/2]
-set num_host_per_sw 	8
+set num_host_per_sw     64
 set num_cores 		[expr ($num_agr_per_pod)*($num_ports/2)]
 set num_host_per_pod 	[expr ($num_host_per_sw)*($num_edg_per_pod)]
 set num_hosts		[expr ($num_host_per_sw)*($num_edg_per_pod)*($num_pod)]
@@ -39,8 +49,17 @@ puts "num_ports:$num_ports num_pod:$num_pod num_agr_per_pod:$num_agr_per_pod num
 $ctr settop $num_host_per_sw $num_edg_per_pod $num_agr_per_pod $num_cor_per_agg $num_pod $num_cores
 
 # 02262020 Peixuan: Set bottleneck link rate and delay
+#set bottoneck_rate 40Mb
+
+#set bottoneck_rate 4Gb
 set bottoneck_rate 40Gb
+
+#set bottoneck_delay 3ms
+#set bottoneck_delay 30us
 set bottoneck_delay 1us
+
+#set other_link_delay 600us
+#set other_link_delay 6us
 set other_link_delay 1us
 
 set hostedg_rate [expr $link_rate]
@@ -81,6 +100,23 @@ for { set pod 0 } { $pod < $num_pod } { incr pod } {
 	}
 }
 
+#Peixuan02282020
+
+$host(0,0,0) color red
+
+$host(0,0,1) color blue
+
+$host(0,1,0) color yellow
+
+$host(0,1,1) color pink
+
+set last_pod [expr $num_pod-1]
+set last_edge [expr $num_edg_per_pod-1]
+set last_index [expr $num_host_per_sw-1]
+
+$host($last_pod,$last_edge,$last_index) color green
+
+
 Queue/RPQ set pfc_threshold_1 $pfc_thr1_host_edg
 Queue/RPQ set margin $margin_
 
@@ -89,8 +125,7 @@ Queue/RPQ set margin $margin_
 for { set pod 0 } { $pod < $num_pod-1 } { incr pod } {
 	for { set edge 0 } { $edge < $num_edg_per_pod } { incr edge } {
 		for { set index 0 } { $index < $num_host_per_sw } { incr index } {
-			#$ns duplex-link $host($pod,$edge,$index) $edg($pod,$edge) [expr $hostedg_rate]Gb $other_link_delay $switchAlg
-			$ns duplex-link $host($pod,$edge,$index) $edg($pod,$edge) $bottoneck_rate $bottoneck_delay $switchAlg 
+			$ns duplex-link $host($pod,$edge,$index) $edg($pod,$edge) [expr $hostedg_rate]Gb $other_link_delay $switchAlg 
 		}
 	}
 }
@@ -136,6 +171,27 @@ set dlink_rate [expr $link_rate*2]
 #Set RDQ queue size to 20
 #$ns queue-limit $node_(r1) $node_(r2) 500
 
+
+# 02282020 Peixuan: 
+
+#set nodes position
+#$ns duplex-link-op $host(0,0,0) $edg(0,0) orient right-up
+#$ns duplex-link-op $host(0,0,1) $edg(0,0) orient left-up
+#$ns duplex-link-op $host(0,1,0) $edg(0,1) orient right-up
+#$ns duplex-link-op $host(0,1,1) $edg(0,1) orient left-up
+
+#$ns duplex-link-op $edg(0,0) $agr(0,0) orient up
+#$ns duplex-link-op $edg(0,0) $agr(0,1) orient right-up
+#$ns duplex-link-op $edg(0,1) $agr(0,1) orient left-up
+#$ns duplex-link-op $edg(1,1) $agr(1,1) orient up
+
+#$ns duplex-link-op $agr(0,0) $core(0) orient right-up
+#$ns duplex-link-op $agr(0,0) $core(1) orient right-up
+#$ns duplex-link-op $agr(0,1) $core(2) orient right-up
+#$ns duplex-link-op $agr(1,1) $core(3) orient right-up
+
+
+
 #############  Agents          #########################
 set lambda [expr ($link_rate*$load*1000000000)/($meanFlowSize*8.000/1460.000*1500.00000)]
 puts "Arrival: Poisson with inter-arrival [expr 1/$lambda * 1000] ms"
@@ -158,6 +214,7 @@ set pod2 [expr $num_pod - 1]
 set edge2 [expr $num_edg_per_pod - 1]
 set index2 [expr $num_host_per_sw - 1]
 
+# Peixuan02282020: Set up one connection
 for { set edge 0 } { $edge < $num_edg_per_pod } { incr edge } {
 			for { set index 0 } { $index < $num_host_per_sw } { incr index } {
 
@@ -168,7 +225,7 @@ for { set edge 0 } { $edge < $num_edg_per_pod } { incr edge } {
 				set w1 [expr $pod*$num_edg_per_pod*$num_host_per_sw+$edge*$num_host_per_sw+$index]
 				set w2 [expr $pod2*$num_edg_per_pod*$num_host_per_sw+$edge2*$num_host_per_sw+$index2]
 
-				$agtagr($pod,$edge,$index,$pod2,$edge2,$index2) set_PCarrival_process  [expr $lambda/($num_hosts - 1)] "$env(HOME)/lining/Gearbox/eval/common/CDF_search.tcl" [expr 17*$w1+1244*$w2] [expr 33*$w1+4369*$w2]
+				$agtagr($pod,$edge,$index,$pod2,$edge2,$index2) set_PCarrival_process  [expr $lambda/($num_hosts - 1)] "$env(HOME)/eval/common/CDF_search.tcl" [expr 17*$w1+1244*$w2] [expr 33*$w1+4369*$w2]
 #				$ns at 0.1 "$agtagr($pod,$edge,$index,$pod2,$edge2,$index2) warmup 0.5 5"
 				$ns at 1 "$agtagr($pod,$edge,$index,$pod2,$edge2,$index2) init_schedule"
 				set init_fid [expr $init_fid + $connections_per_pair];							
