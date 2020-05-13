@@ -1,10 +1,10 @@
 # Gearbox
 
-manual
-./tcp-HRCC.sh 10 0.5 Topology-incast-singlenode.tcl
-./tcp-DropTail.sh 100 Topology-incast-singlenode.tcl
+manual  
+./tcp-HRCC.sh 10 0.5 Topology-incast-singlenode.tcl  
+./tcp-DropTail.sh 100 Topology-incast-singlenode.tcl  
 
-automatic 
+automatic  
 step: ./tcp.sh tcp-general.tcl 10 0.5 Topology-incast-singlenode-unify.tcl AFQ10PL
       ./tcp.sh tcp-general-outinclude.tcl 10 0.5 Topology-incast-singlenode-unify.tcl AFQ10PL
 ./runall.sh tcp-general.tcl 10 0.5 Topology-incast-singlenode-unify.tcl
