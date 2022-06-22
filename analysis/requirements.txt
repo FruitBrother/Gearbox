@@ -9,7 +9,7 @@ jupyter-client==6.0.0
 jupyter-core==4.6.3
 kiwisolver==1.1.0
 matplotlib==3.0.3
-numpy==1.18.1
+numpy==1.22.0
 pandas==0.24.2
 parso==0.6.2
 pexpect==4.8.0
